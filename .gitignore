@@ -11,6 +11,8 @@
 # production
 /build
 .idea
+.github
+.firebase
 z_declaration_func_example.txt
 
 # misc
