@@ -1,7 +1,12 @@
-import {onAuthStateChanged, signInWithPopup, signOut, User,} from "firebase/auth";
-import {auth, provider} from "../../api/firebase.config";
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {AppThunk} from "../store";
+import {
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+  User,
+} from "firebase/auth";
+import { auth, provider } from "../../api/firebase.config";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AppThunk } from "../store";
 import {
   checkSignInError,
   checkSignInRequest,
