@@ -10,6 +10,8 @@
 
 # production
 /build
+.idea
+z_declaration_func_example.txt
 
 # misc
 .DS_Store
