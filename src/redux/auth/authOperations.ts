@@ -44,24 +44,33 @@ export const signInWithGoogle = createAsyncThunk(
   }
 );
 
+type TCallback = (data: boolean) => void;
+
 /**
  * Check is user sign in on Firebase
+ * @param {function} callback - setter. When we wait for any response to the user request,
+ * we run a function to render routes
  */
-export const checkUserSignIn = (): AppThunk => async (dispatch) => {
-  dispatch(checkSignInRequest());
-  try {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const newUser = createDataOfUserInfo(user);
-        dispatch(checkSignInSuccess(newUser));
-      } else {
-        dispatch(checkSignInError("no auth"));
-      }
-    });
-  } catch (e) {
-    dispatch(checkSignInError(e));
-  }
-};
+export const checkUserSignIn =
+  (callback: TCallback): AppThunk =>
+  async (dispatch) => {
+    dispatch(checkSignInRequest());
+    try {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const newUser = createDataOfUserInfo(user);
+          dispatch(checkSignInSuccess(newUser));
+          callback(true);
+        } else {
+          dispatch(checkSignInError("no auth"));
+          callback(true);
+        }
+      });
+    } catch (e) {
+      dispatch(checkSignInError(e));
+      callback(true);
+    }
+  };
 
 /**
  * Logout user in Firebase

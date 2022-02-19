@@ -1,15 +1,21 @@
 import MetaTags from "react-meta-tags";
-import React, { useCallback } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getStoreUser } from "../../redux/auth/authSelectors";
 import {
-  logoutUserInFirebase,
-  signInWithGoogle,
-} from "../../redux/auth/authOperations";
+  getStoreUser,
+  getStoreUserAuthenticated,
+} from "../../redux/auth/authSelectors";
+import { signInWithGoogle } from "../../redux/auth/authOperations";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Container } from "reactstrap";
+import { ReactComponent as GLogo } from "../../assets/images/svg/google-logo.svg";
 
-const SignInPage = () => {
+const SignInPage: FC = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const isAuthenticated = useAppSelector(getStoreUserAuthenticated);
   const storeUser = useAppSelector(getStoreUser);
   console.log(storeUser);
 
@@ -17,17 +23,26 @@ const SignInPage = () => {
     dispatch(signInWithGoogle());
   }, [dispatch]);
 
-  const onLogout = useCallback(() => {
-    dispatch(logoutUserInFirebase());
-  }, [dispatch]);
+  // @ts-ignore
+  const fromPage = location.state ? location.state?.from?.pathname : "/";
+
+  useEffect(() => {
+    isAuthenticated && navigate(fromPage, { replace: true });
+  }, [fromPage, isAuthenticated, navigate]);
+
   return (
     <div>
       <MetaTags>
         <title>{`Shop App | Sign In`}</title>
       </MetaTags>
 
-      <button onClick={onGoogleSignIn}>Login</button>
-      <button onClick={onLogout}>Logout</button>
+      <Container>
+        <h1>SignInPage</h1>
+
+        <Button onClick={onGoogleSignIn} color={"light"} className="border">
+          <GLogo /> Войти с помощью Google
+        </Button>
+      </Container>
     </div>
   );
 };

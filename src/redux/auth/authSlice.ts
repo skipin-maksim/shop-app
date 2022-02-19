@@ -4,6 +4,7 @@ import { onPending, onRejected, onSignInFulfilled } from "./authSliceFunctions";
 import { IAuthStore } from "../types/authTypes";
 
 const initialState: IAuthStore = {
+  isAuthenticated: false,
   user: null,
   loading: false,
   error: null,
@@ -38,10 +39,10 @@ const { reducer, actions } = createSlice({
       .addCase(signInWithGoogle.pending, (state) => {
         onPending(state);
       })
-      .addCase(signInWithGoogle.fulfilled, (state, { payload }: any) => {
+      .addCase(signInWithGoogle.fulfilled, (state, { payload }) => {
         onSignInFulfilled(state, payload);
       })
-      .addCase(signInWithGoogle.rejected, (state, { payload }: any) => {
+      .addCase(signInWithGoogle.rejected, (state, { payload }) => {
         onRejected(state, payload);
       });
   },
