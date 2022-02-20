@@ -10,15 +10,15 @@ const useRedirectForRole = () => {
 
   useEffect(() => {
     if (authUserStatus && isAut && location.pathname === `/${role}`) {
-      navigate(`/${role}/dashboard`, { replace: true });
+      return navigate(`/${role}/dashboard`, { replace: true });
     }
 
     if (authUserStatus && isAut && location.pathname === "/") {
-      navigate(`/${role}/dashboard`, { replace: true });
+      return navigate(`/${role}/dashboard`, { replace: true });
     }
 
     if (!isAut && location.pathname === "/") {
-      navigate(`/sign-in`, { replace: true });
+      return navigate(`/sign-in`, { replace: true });
     }
   }, [isAut, authUserStatus, location, navigate, role]);
 

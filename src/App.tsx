@@ -12,6 +12,7 @@ import Page404 from "./pages/Page404/Page404";
 import { initTheme } from "./helpers/layoutHelpers";
 import { userTypes } from "./common/constants/userTypes";
 import useRedirectForRole from "./hooks/useRedirectForRole";
+import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 
 function App() {
   const { authUserStatus } = useRedirectForRole();
@@ -38,11 +39,12 @@ function App() {
             >
               <Route path={"dashboard"} element={<OwnerDashboard />} />
             </Route>
-
-            <Route path={"*"} element={<Page404 />} />
-            <Route path={"/unauthorized"} element={<Unauthorized />} />
-            <Route path={"/sign-in"} element={<SignInPage />} />
           </Route>
+
+          <Route path={"*"} element={<Page404 />} />
+          <Route path={"/unauthorized"} element={<Unauthorized />} />
+          <Route path={"/registration"} element={<RegistrationPage />} />
+          <Route path={"/sign-in"} element={<SignInPage />} />
         </Routes>
       )}
 

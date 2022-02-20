@@ -1,7 +1,10 @@
 import React, { FC } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
-import { getStoreUserAuthenticated } from "../../redux/auth/authSelectors";
+import {
+  getStoreUser,
+  getStoreUserAuthenticated,
+} from "../../redux/auth/authSelectors";
 import { userTypesArray } from "../../common/constants/userTypes";
 
 interface IProps {
@@ -11,6 +14,8 @@ interface IProps {
 const RequireAuth: FC<IProps> = ({ allowedUserRoles }) => {
   const location = useLocation();
   const isAuthenticated = useAppSelector(getStoreUserAuthenticated);
+  const storeUser = useAppSelector(getStoreUser);
+
   const role = "client";
 
   if (!isAuthenticated) {
@@ -21,9 +26,17 @@ const RequireAuth: FC<IProps> = ({ allowedUserRoles }) => {
     allowedUserRoles.includes(type)
   );
 
-  if (isUserAllowed.includes(role) && isAuthenticated) {
-    return <Outlet />;
-  }
+  const isUserMatchesCriteria =
+    storeUser &&
+    isUserAllowed.includes(storeUser.role) &&
+    isAuthenticated &&
+    storeUser.approved;
+
+  if (isUserMatchesCriteria) return <Outlet />;
+
+  if (!isUserMatchesCriteria)
+    return <Navigate to="/unauthorized" state={{ from: location }} replace />;
+
   if (!isUserAllowed.includes(role) && isAuthenticated) {
     // return <Navigate to="/unauthorized" state={{ from: location }} replace />;
     return <Navigate to="/" state={{ from: location }} replace />;

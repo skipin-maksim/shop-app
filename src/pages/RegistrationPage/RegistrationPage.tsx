@@ -1,21 +1,18 @@
-import MetaTags from "react-meta-tags";
 import React, { FC, useCallback, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   getStoreAuthError,
   getStoreUser,
   getStoreUserAuthenticated,
 } from "../../redux/auth/authSelectors";
-import {
-  logoutUserInFirebase,
-  signInWithEmailPass,
-} from "../../redux/auth/authOperations";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { registrationWithEmailPass } from "../../redux/auth/authOperations";
+import MetaTags from "react-meta-tags";
 import { Button, Container } from "reactstrap";
 import { ReactComponent as GLogo } from "../../assets/images/svg/google-logo.svg";
 import { signInWithGoogle } from "../../api/api.functions";
 
-const SignInPage: FC = () => {
+const RegistrationPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -31,9 +28,9 @@ const SignInPage: FC = () => {
   //   console.log("Открыть модалку, что пользователь не подтвержден");
   // }
 
-  const onLogout = useCallback(() => {
-    dispatch(logoutUserInFirebase());
-  }, [dispatch]);
+  // const onLogout = useCallback(() => {
+  //   dispatch(logoutUserInFirebase());
+  // }, [dispatch]);
 
   const inputChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
@@ -44,7 +41,7 @@ const SignInPage: FC = () => {
     e.preventDefault();
 
     console.log(userData);
-    signInWithEmailPass(userData);
+    registrationWithEmailPass(userData);
   };
 
   useEffect(() => {
@@ -53,7 +50,6 @@ const SignInPage: FC = () => {
 
     isAuthenticated && navigate(fromPage, { replace: true });
   }, [isAuthenticated, location.state, navigate]);
-
   return (
     <div>
       <MetaTags>
@@ -61,13 +57,7 @@ const SignInPage: FC = () => {
       </MetaTags>
 
       <Container>
-        <h1>SignInPage</h1>
-
-        {storeAuthError?.msg}
-
-        {storeUser && storeUser.providerId === "password" && (
-          <div>Введите имя</div>
-        )}
+        <h1>Регистрация</h1>
 
         <form onSubmit={submitHandle}>
           <input
@@ -85,22 +75,18 @@ const SignInPage: FC = () => {
           />
           <br />
           <Button type={"submit"} color={"secondary"} className="border">
-            Войти
+            Зарегистрироваться
           </Button>
         </form>
         <br />
-        <Link to={"/registration"}>Или зарегистрируйтесь</Link>
+        <Link to={"/sign-in"}>Или войдите</Link>
         <br />
         <Button onClick={signInWithGoogle} color={"light"} className="border">
-          <GLogo /> Войти с помощью Google
-        </Button>
-        <br />
-        <Button color="primary" onClick={onLogout}>
-          Logout
+          <GLogo /> Регистрация с помощью Google
         </Button>
       </Container>
     </div>
   );
 };
 
-export default SignInPage;
+export default RegistrationPage;

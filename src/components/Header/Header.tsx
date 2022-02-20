@@ -5,11 +5,16 @@ import { Button } from "reactstrap";
 import { switchTheme } from "../../helpers/layoutHelpers";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getStoreUserAuthenticated } from "../../redux/auth/authSelectors";
+import {
+  getStoreUser,
+  getStoreUserAuthenticated,
+} from "../../redux/auth/authSelectors";
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector(getStoreUserAuthenticated);
+  const storeUser = useAppSelector(getStoreUser);
+  // photoURL
 
   const onLogout = useCallback(() => {
     dispatch(logoutUserInFirebase());
@@ -23,6 +28,10 @@ const Header: FC = () => {
 
       <br />
       <Button onClick={switchTheme}>Switch theme</Button>
+      {storeUser && storeUser?.photoURL && (
+        <img src={storeUser.photoURL} alt="avatar" />
+      )}
+
       <br />
 
       {isAuthenticated && (
