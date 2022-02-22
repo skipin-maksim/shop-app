@@ -1,7 +1,7 @@
 import { child, get, ref, set, update } from "firebase/database";
 import { auth, db, provider } from "./firebase.config";
 import { createDataOfUserInfo } from "../redux/auth/authFunctions";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signInWithRedirect } from "firebase/auth";
 import {
   TCheckUserInFirebase,
   TCreateUserInFirebase,
@@ -15,7 +15,7 @@ const dbRef = ref(db);
  * Sign in with Google Provider
  */
 export const signInWithGoogle = async () => {
-  await signInWithPopup(auth, provider);
+  await signInWithRedirect(auth, provider);
 };
 
 /**

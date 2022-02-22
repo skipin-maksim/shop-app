@@ -14,10 +14,8 @@ import {
   logoutRequest,
   logoutSuccess,
 } from "./authSlice";
-import { createDataOfUserInfo } from "./authFunctions";
 import { TSetterCallback } from "../types/authTypes";
 import {
-  checkUserInFirebase,
   createUserInFirebase,
   existingUserUpdateInFirebase,
   getUserByIDInFirebase,
@@ -40,7 +38,6 @@ export const logoutUserInFirebase = (): AppThunk => async (dispatch) => {
 };
 
 export const registrationWithEmailPass = (data: any) => {
-  console.log(data);
   createUserWithEmailAndPassword(auth, data.email, data.password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -49,9 +46,7 @@ export const registrationWithEmailPass = (data: any) => {
     })
     .catch((e) => {
       const errorCode = e.code;
-      const errorMessage = e.message;
-      console.log(e);
-      // ..
+      console.log(errorCode);
     });
 };
 
@@ -65,7 +60,6 @@ export const signInWithEmailPass = (data: any) => {
     })
     .catch((e) => {
       const errorCode = e.code;
-      const errorMessage = e.message;
       console.log(errorCode);
     });
 };

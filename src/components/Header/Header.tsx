@@ -1,54 +1,50 @@
-import React, { FC, useCallback } from "react";
-import { logoutUserInFirebase } from "../../redux/auth/authOperations";
-import { ReactComponent as GLogo } from "../../assets/images/svg/google-logo.svg";
-import { Button } from "reactstrap";
-import { switchTheme } from "../../helpers/layoutHelpers";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 import {
   getStoreUser,
   getStoreUserAuthenticated,
 } from "../../redux/auth/authSelectors";
+import LogoutBtn from "../_buttons/LogoutBtn/LogoutBtn";
+import LanguageDropdown from "../LanguageDropdown/LanguageDropdown";
+import { Container } from "reactstrap";
+import { ReactComponent as Logo } from "../../assets/images/svg/logo.svg";
+
+import s from "./header.module.scss";
 
 const Header: FC = () => {
-  const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector(getStoreUserAuthenticated);
   const storeUser = useAppSelector(getStoreUser);
-  // photoURL
-
-  const onLogout = useCallback(() => {
-    dispatch(logoutUserInFirebase());
-  }, [dispatch]);
 
   return (
-    <header className="App-header">
-      <h2>
-        Header <GLogo />
-      </h2>
+    <header id={"header"} className={`auto-bg py-2 ${s.header}`}>
+      <Container>
+        <div className={"d-flex align-items-center justify-content-between"}>
+          <Link to={"/"} className={"text-decoration-none"}>
+            <h1 className={"d-flex align-items-center m-0"}>
+              <Logo width={30} className={"me-2"} />
+              Shop App
+            </h1>
+          </Link>
+          <LanguageDropdown />
+        </div>
 
-      <br />
-      <Button onClick={switchTheme}>Switch theme</Button>
-      {storeUser && storeUser?.photoURL && (
-        <img src={storeUser.photoURL} alt="avatar" />
-      )}
+        {storeUser && storeUser?.photoURL && (
+          <img src={storeUser.photoURL} alt="avatar" />
+        )}
 
-      <br />
-
-      {isAuthenticated && (
-        <>
-          <Link to={"/sign-in"}>To sign in</Link>
-          <br />
-          <Link to={"/owner/dashboard"}>To /OWNER dashboard</Link>
-          <br />
-          <Link to={"/client/dashboard"}>To /CLIENT dashboard</Link>
-          <br />
-          <Link to={"/"}>To /</Link>
-          <br />
-          <Button color="primary" onClick={onLogout}>
-            Logout
-          </Button>
-        </>
-      )}
+        {isAuthenticated && (
+          <>
+            <Link to={"/owner/dashboard"}>To /OWNER dashboard</Link>
+            <br />
+            <Link to={"/client/dashboard"}>To /CLIENT dashboard</Link>
+            <br />
+            <Link to={"/"}>To /</Link>
+            <br />
+            <LogoutBtn />
+          </>
+        )}
+      </Container>
     </header>
   );
 };

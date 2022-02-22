@@ -4,6 +4,12 @@
 @import "./assets/scss/variables";
 @import "./assets/scss/mixins";
 
+$bg-first-light: #ffffff;
+$bg-second-light: #fafafa;
+$bg-first-dark: #08192c;
+$bg-second-dark: #0c2540;
+$color-black: #1e1e1e;
+
 *,
 *:after,
 *:before {
@@ -11,32 +17,103 @@
   margin: 0;
   box-sizing: border-box;
 }
+html,
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#header,
+#footer {
+  flex: 0 0 auto;
+}
+#main-content {
+  padding: 20px 0;
+  flex: 1 0 auto;
+}
 
 body {
   margin: 0;
+  height: 100%;
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   &[data-theme="dark"] {
     $enable-gradients: true;
-
     $body-color: #eeeeee;
-
     --#{$variable-prefix}body-color: #{$body-color};
-
     background: url("./assets/images/png/pattern-dark.png");
+
+    .auto-bg {
+      background: $bg-first-dark;
+      color: $body-color;
+    }
+    .auto-color {
+      color: $body-color;
+    }
+
+    input {
+      color: $white;
+      background: transparent;
+    }
+    .main-input {
+      padding: 8px;
+      border: 1px solid $body-color;
+      border-radius: 5px;
+
+      &:focus-visible {
+        border: 1px solid $primary;
+      }
+    }
   }
 
   &[data-theme="light"] {
     $enable-gradients: true;
-
-    $body-color: #1a1a1a;
-
+    $body-color: $color-black;
     --#{$variable-prefix}body-color: #{$body-color};
-
     background: url("./assets/images/png/pattern.png");
+
+    .auto-bg {
+      background: $bg-first-light;
+      color: $body-color;
+    }
+    .auto-color {
+      color: $body-color;
+    }
+
+    input {
+      color: $color-black;
+      background: transparent;
+      outline: none;
+    }
+
+    .main-input {
+      padding: 8px;
+      border: 1px solid $body-color;
+      border-radius: 5px;
+
+      &:focus-visible {
+        border: 1px solid $primary;
+      }
+    }
   }
 }
 
 @import "./assets/scss/bootstrap";
+
+.color-inherit {
+  color: inherit;
+}
+
+.main-input-group {
+  position: relative;
+}
+
+.main-input-error {
+  position: absolute;
+  margin: 0;
+  top: 42px;
+  color: $danger;
+  font-size: 12px;
+}

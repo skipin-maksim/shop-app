@@ -1,0 +1,44 @@
+@import "../../../styles";
+
+.switcher_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 45px;
+  background: transparent;
+  border: none;
+  color: inherit;
+}
+
+.line {
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+}
+
+body[data-theme="dark"] .line {
+  background: #eee;
+}
+body[data-theme="light"] .line {
+  background: #1a1a1a;
+}
+
+.moon,
+.sun {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 25px;
+  background: $primary;
+}
+
+.moon {
+  left: 0;
+}
+
+.sun {
+  right: 0;
+  color: $white;
+}

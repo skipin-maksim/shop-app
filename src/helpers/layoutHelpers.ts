@@ -12,8 +12,10 @@ export const switchTheme = () => {
   if (bodyDataSet.theme === "dark") {
     body.setAttribute("data-theme", "light");
     localStorage.setItem("data-theme", "light");
+    return "light";
   } else {
     body.setAttribute("data-theme", "dark");
     localStorage.setItem("data-theme", "dark");
+    return "dark";
   }
 };

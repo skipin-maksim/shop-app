@@ -1,0 +1,22 @@
+{
+  "common": {
+    "logout": "Logout",
+    "formMessages": {
+      "requiredField": "Required field",
+      "minLength": "Password must be longer than 6 latin characters or numbers"
+    }
+  },
+
+  "signInPage": {
+    "sigIn": "Sign In",
+    "sigInBtn": "Sign In",
+    "orRegistration": "Or register",
+    "signInWithGoogle": "Sign in with Google"
+  },
+  "registerPage": {
+    "register": "Registration",
+    "registerBtn": "Register",
+    "orSignIn": "Or sign in",
+    "registerWithGoogle": "Register with Google"
+  }
+}

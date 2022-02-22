@@ -22,7 +22,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <>
       {authUserStatus && (
         <Routes>
           <Route path={"/"} element={<LayOut />}>
@@ -39,17 +39,17 @@ function App() {
             >
               <Route path={"dashboard"} element={<OwnerDashboard />} />
             </Route>
-          </Route>
 
-          <Route path={"*"} element={<Page404 />} />
-          <Route path={"/unauthorized"} element={<Unauthorized />} />
-          <Route path={"/registration"} element={<RegistrationPage />} />
-          <Route path={"/sign-in"} element={<SignInPage />} />
+            <Route path={"*"} element={<Page404 />} />
+            <Route path={"/unauthorized"} element={<Unauthorized />} />
+            <Route path={"/registration"} element={<RegistrationPage />} />
+            <Route path={"/sign-in"} element={<SignInPage />} />
+          </Route>
         </Routes>
       )}
 
       {!authUserStatus && <div>Loading...</div>}
-    </div>
+    </>
   );
 }
 

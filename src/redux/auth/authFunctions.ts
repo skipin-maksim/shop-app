@@ -1,8 +1,4 @@
-import { User } from "firebase/auth";
 import { IAuthStore, TCreateDataOfUserInfo } from "../types/authTypes";
-import { ref, update } from "firebase/database";
-import { db } from "../../api/firebase.config";
-import { checkSignInError, checkSignInSuccess } from "./authSlice";
 
 export const onPending = (state: IAuthStore) => {
   state.loading = true;

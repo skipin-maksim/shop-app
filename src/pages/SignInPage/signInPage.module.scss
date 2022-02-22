@@ -1,0 +1,28 @@
+@import "../../styles";
+
+body {
+  //&[data-theme="light"] {
+  //  .form_wrp {
+  //    background: $bg-first-light;
+  //  }
+  //}
+  //&[data-theme="dark"] {
+  //  .form_wrp {
+  //    background: $bg-first-dark;
+  //  }
+  //}
+}
+
+.form_wrp {
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.form {
+  width: 100%;
+
+  input {
+    width: 100%;
+  }
+}

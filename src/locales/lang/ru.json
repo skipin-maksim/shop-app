@@ -1,0 +1,23 @@
+{
+  "common": {
+    "logout": "Выйти",
+    "formMessages": {
+      "requiredField": "Обязательное поле",
+      "minLength": "Пароль должен быть длиннее 6 латинских символов или чисел"
+    }
+  },
+
+  "signInPage": {
+    "sigIn": "Вход",
+    "sigInBtn": "Войти",
+    "orRegistration": "Или зарегистрируйтесь",
+    "signInWithGoogle": "Войти с помощью Google"
+  },
+
+  "registerPage": {
+    "register": "Регистрация",
+    "registerBtn": "Зарегистрироваться",
+    "orSignIn": "Или войдите",
+    "registerWithGoogle": "Регистрация с помощью Google"
+  }
+}

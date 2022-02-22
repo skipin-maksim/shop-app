@@ -8,9 +8,9 @@ const LayOut: FC = () => {
   return (
     <>
       <Header />
-      <br />
+
       <Outlet />
-      <br />
+
       <Footer />
     </>
   );
