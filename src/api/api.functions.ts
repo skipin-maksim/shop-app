@@ -1,22 +1,14 @@
 import { child, get, ref, set, update } from "firebase/database";
-import { auth, db, provider } from "./firebase.config";
+import { db } from "./firebase.config";
 import { createDataOfUserInfo } from "../redux/auth/authFunctions";
-import { signInWithPopup, signInWithRedirect } from "firebase/auth";
 import {
+  IReturnedUser,
   TCheckUserInFirebase,
   TCreateUserInFirebase,
-  TExistingUserUpdateInFirebase,
   TGetUserByIDInFirebase,
 } from "../redux/types/authTypes";
 
 const dbRef = ref(db);
-
-/**
- * Sign in with Google Provider
- */
-export const signInWithGoogle = async () => {
-  await signInWithRedirect(auth, provider);
-};
 
 /**
  * Check is user exists in Firebase
@@ -35,13 +27,23 @@ export const checkUserInFirebase: TCheckUserInFirebase = async (uid) => {
  * Create new user in Firebase if not exists. Returns him or null
  * @param {object} user: - user in Firebase Auth
  * @param {string} role - "client" | "admin" | "owner"
+ * @param {object} customData
  */
 export const createUserInFirebase: TCreateUserInFirebase = async (
   user,
-  role
+  role,
+  customData
 ) => {
   try {
-    const newUserData = createDataOfUserInfo(user, role);
+    let newUserData = createDataOfUserInfo(user, role);
+
+    if (customData) {
+      newUserData = {
+        ...newUserData,
+        displayName: customData.firstName + " " + customData?.lastName,
+        phoneNumber: customData.phoneNumber,
+      };
+    }
 
     await set(ref(db, `users/${user.uid}`), newUserData);
     return newUserData;
@@ -70,24 +72,17 @@ export const getUserByIDInFirebase: TGetUserByIDInFirebase = async (uid) => {
 };
 
 /**
- * User update without touching the approved field
- * @param {object} user: - user in Firebase Auth
- * @param {object} existingUser - user in Firebase database users
- * @param {string} role - "client" | "admin" | "owner"
+ * Update user by UID in Firebase.
+ * @param {object} user - user in Firebase database
  */
-export const existingUserUpdateInFirebase: TExistingUserUpdateInFirebase =
-  async (user, existingUser, role) => {
-    try {
-      const updates = {};
-      // @ts-ignore
-      updates[`users/${user.uid}`] = {
-        ...createDataOfUserInfo(user, role),
-        approved: existingUser.approved,
-        role: existingUser.role,
-      };
+export const updateUserInFirebase = async (user: IReturnedUser) => {
+  try {
+    const updates = {};
+    // @ts-ignore
+    updates[`users/${user.uid}`] = user;
 
-      await update(ref(db), updates);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+    await update(ref(db), updates);
+  } catch (e) {
+    console.error(e);
+  }
+};

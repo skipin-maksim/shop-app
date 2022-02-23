@@ -12,7 +12,12 @@ export interface IAuthStore {
 
 export type TCreateUserInFirebase = (
   user: User,
-  role: TRole
+  role: TRole,
+  customData?: {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+  }
 ) => Promise<IReturnedUser | null | undefined>;
 //====================================================================================
 
@@ -55,5 +60,5 @@ export type TExistingUserUpdateInFirebase = (
   user: User,
   existingUser: IReturnedUser,
   role: TRole
-) => void;
+) => Promise<IReturnedUser>;
 //====================================================================================

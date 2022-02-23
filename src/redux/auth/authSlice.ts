@@ -32,6 +32,10 @@ const { reducer, actions } = createSlice({
     logoutError: (state, { payload }) => {
       onRejected(state, payload);
     },
+
+    setUpdatedUser: (state, { payload }) => {
+      state.user = payload;
+    },
   },
   // extraReducers: (builder) => {
   //   builder
@@ -55,6 +59,8 @@ export const {
   logoutRequest,
   logoutSuccess,
   logoutError,
+
+  setUpdatedUser,
 } = actions;
 
 export default reducer;

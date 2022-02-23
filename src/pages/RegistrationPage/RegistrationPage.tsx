@@ -1,12 +1,16 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
-import { getStoreUserAuthenticated } from "../../redux/auth/authSelectors";
+import {
+  getStoreUser,
+  getStoreUserAuthenticated,
+} from "../../redux/auth/authSelectors";
 import MetaTags from "react-meta-tags";
 import { Container } from "reactstrap";
 import SigInRegister from "../../components/_forms/SigInRegister/SigInRegister";
 import s from "../SignInPage/signInPage.module.scss";
 import { useTranslation } from "react-i18next";
+import RegistrationPageNextStep from "./RegistrationPageNextStep";
 
 const RegistrationPage: FC = () => {
   const location = useLocation();
@@ -14,15 +18,27 @@ const RegistrationPage: FC = () => {
   const { t } = useTranslation();
 
   const isAuthenticated = useAppSelector(getStoreUserAuthenticated);
+  const storeUser = useAppSelector(getStoreUser);
+
+  const isGoogleUserAndNotNumber = useMemo(
+    () =>
+      storeUser &&
+      storeUser?.providerId === "google.com" &&
+      !storeUser?.phoneNumber,
+    [storeUser]
+  );
 
   useEffect(() => {
     // @ts-ignore
     const fromPage = location.state ? location.state?.from?.pathname : "/";
 
-    isAuthenticated && navigate(fromPage, { replace: true });
-  }, [isAuthenticated, location.state, navigate]);
+    isAuthenticated &&
+      !isGoogleUserAndNotNumber &&
+      navigate(fromPage, { replace: true });
+  }, [isAuthenticated, isGoogleUserAndNotNumber, location.state, navigate]);
+
   return (
-    <div id={"main-content"}>
+    <div>
       <MetaTags>
         <title>{`Shop App | Registration`}</title>
       </MetaTags>
@@ -31,7 +47,8 @@ const RegistrationPage: FC = () => {
         <div className={`auto-bg ${s.form_wrp}`}>
           <h2 className={"mb-4 text-center"}>{t("registerPage.register")}</h2>
 
-          <SigInRegister pageType={"register"} />
+          {isGoogleUserAndNotNumber && <RegistrationPageNextStep />}
+          {!isGoogleUserAndNotNumber && <SigInRegister pageType={"register"} />}
         </div>
       </Container>
     </div>

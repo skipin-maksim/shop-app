@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import {
@@ -16,6 +16,14 @@ const Header: FC = () => {
   const isAuthenticated = useAppSelector(getStoreUserAuthenticated);
   const storeUser = useAppSelector(getStoreUser);
 
+  const isGoogleUserAndNotNumber = useMemo(
+    () =>
+      storeUser &&
+      storeUser?.providerId === "google.com" &&
+      !storeUser?.phoneNumber,
+    [storeUser]
+  );
+
   return (
     <header id={"header"} className={`auto-bg py-2 ${s.header}`}>
       <Container>
@@ -26,22 +34,24 @@ const Header: FC = () => {
               Shop App
             </h1>
           </Link>
+
+          <LogoutBtn />
+
           <LanguageDropdown />
         </div>
 
-        {storeUser && storeUser?.photoURL && (
-          <img src={storeUser.photoURL} alt="avatar" />
-        )}
-
-        {isAuthenticated && (
+        {isAuthenticated && !isGoogleUserAndNotNumber && (
           <>
+            {storeUser?.photoURL && (
+              <img src={storeUser.photoURL} alt="avatar" />
+            )}
+
             <Link to={"/owner/dashboard"}>To /OWNER dashboard</Link>
             <br />
             <Link to={"/client/dashboard"}>To /CLIENT dashboard</Link>
             <br />
             <Link to={"/"}>To /</Link>
             <br />
-            <LogoutBtn />
           </>
         )}
       </Container>

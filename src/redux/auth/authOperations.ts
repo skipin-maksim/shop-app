@@ -2,9 +2,10 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { auth } from "../../api/firebase.config";
+import { auth, provider } from "../../api/firebase.config";
 import { AppThunk } from "../store";
 import {
   checkSignInError,
@@ -17,9 +18,13 @@ import {
 import { TSetterCallback } from "../types/authTypes";
 import {
   createUserInFirebase,
-  existingUserUpdateInFirebase,
   getUserByIDInFirebase,
+  updateUserInFirebase,
 } from "../../api/api.functions";
+import { sendRegisterMsgToTelegram } from "../../api/api.tg.functions";
+import { createDataOfUserInfo } from "./authFunctions";
+
+const defaultRole = "client";
 
 /**
  * Logout user in Firebase
@@ -31,24 +36,49 @@ export const logoutUserInFirebase = (): AppThunk => async (dispatch) => {
     .then(() => {
       dispatch(logoutSuccess());
     })
-    .catch((error) => {
+    .catch((e) => {
       dispatch(logoutError("no auth"));
-      console.log(error);
+      console.log(e);
     });
 };
 
-export const registrationWithEmailPass = (data: any) => {
-  createUserWithEmailAndPassword(auth, data.email, data.password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-      // ...
-    })
-    .catch((e) => {
-      const errorCode = e.code;
-      console.log(errorCode);
-    });
+/**
+ * Sign in with Google Provider
+ */
+export const signInWithGoogle = (): AppThunk => async (dispatch) => {
+  dispatch(checkSignInRequest());
+
+  try {
+    const { user } = await signInWithPopup(auth, provider);
+    const createdUser = await createUserInFirebase(user, defaultRole);
+    dispatch(checkSignInSuccess(createdUser));
+  } catch (e) {
+    console.error(e);
+    dispatch(checkSignInError(e));
+  }
 };
+
+export const registrationWithEmailPass =
+  (data: any): AppThunk =>
+  async (dispatch) => {
+    dispatch(checkSignInRequest());
+
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      const createdUser = await createUserInFirebase(user, defaultRole, data);
+
+      dispatch(checkSignInSuccess(createdUser));
+      await sendRegisterMsgToTelegram(createdUser);
+    } catch (e) {
+      console.error(e);
+      dispatch(checkSignInError(e));
+    }
+  };
 
 export const signInWithEmailPass = (data: any) => {
   signInWithEmailAndPassword(auth, data.email, data.password)
@@ -60,7 +90,7 @@ export const signInWithEmailPass = (data: any) => {
     })
     .catch((e) => {
       const errorCode = e.code;
-      console.log(errorCode);
+      console.log(e, errorCode);
     });
 };
 
@@ -77,23 +107,20 @@ export const checkUserSignIn =
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const existingUser = await getUserByIDInFirebase(user.uid);
-          const defaultRole = "client";
 
-          if (!existingUser) {
-            const createdUser = await createUserInFirebase(user, defaultRole);
-            dispatch(checkSignInSuccess(createdUser));
+          if (existingUser) {
+            const newUserData = {
+              ...createDataOfUserInfo(user, defaultRole),
+              approved: existingUser.approved,
+              role: existingUser.role,
+              phoneNumber: existingUser?.phoneNumber,
+            };
+
+            await updateUserInFirebase(newUserData);
+
+            dispatch(checkSignInSuccess(newUserData));
           } else {
-            if (existingUser) {
-              await existingUserUpdateInFirebase(
-                user,
-                existingUser,
-                defaultRole
-              );
-
-              dispatch(checkSignInSuccess(existingUser));
-            } else {
-              dispatch(checkSignInError({ msg: "user not approved" }));
-            }
+            dispatch(checkSignInError({ msg: "user not approved" }));
           }
 
           callback(true);

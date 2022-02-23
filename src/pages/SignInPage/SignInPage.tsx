@@ -2,7 +2,6 @@ import MetaTags from "react-meta-tags";
 import React, { FC, useEffect } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import {
-  // getStoreAuthError,
   getStoreUser,
   getStoreUserAuthenticated,
 } from "../../redux/auth/authSelectors";
@@ -20,8 +19,6 @@ const SignInPage: FC = () => {
 
   const isAuthenticated = useAppSelector(getStoreUserAuthenticated);
   const storeUser = useAppSelector(getStoreUser);
-  // const storeAuthError = useAppSelector(getStoreAuthError);
-  console.log(storeUser);
 
   useEffect(() => {
     // @ts-ignore
@@ -32,14 +29,12 @@ const SignInPage: FC = () => {
 
   // TODO Если user регистрируется через мыло и пароль, сделать окно ввода имени тд
   return (
-    <div id={"main-content"}>
+    <div>
       <MetaTags>
         <title>{`Shop App | ${t("signInPage.sigIn")}`}</title>
       </MetaTags>
 
       <Container>
-        {/*{storeAuthError?.msg}*/}
-
         {storeUser && storeUser.providerId === "password" && (
           <div>Введите имя</div>
         )}

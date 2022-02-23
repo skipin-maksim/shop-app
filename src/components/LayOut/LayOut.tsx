@@ -9,7 +9,9 @@ const LayOut: FC = () => {
     <>
       <Header />
 
-      <Outlet />
+      <div id={"main-content"}>
+        <Outlet />
+      </div>
 
       <Footer />
     </>

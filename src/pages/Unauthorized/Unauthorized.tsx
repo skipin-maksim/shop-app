@@ -25,7 +25,7 @@ const Unauthorized: FC = () => {
   }, [isAuthenticated, navigate, storeUser]);
 
   return (
-    <div id={"main-content"}>
+    <div>
       <h2>
         {isAuthenticated && storeUser && !storeUser.approved && text2}
         {!isAuthenticated && text1}
