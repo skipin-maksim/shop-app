@@ -7,10 +7,10 @@ import {
 } from "../../redux/auth/authSelectors";
 import MetaTags from "react-meta-tags";
 import { Container } from "reactstrap";
-import SigInRegister from "../../components/_forms/SigInRegister/SigInRegister";
 import s from "../SignInPage/signInPage.module.scss";
 import { useTranslation } from "react-i18next";
 import RegistrationPageNextStep from "./RegistrationPageNextStep";
+import RegisterForm from "../../components/_forms/SigInRegister/RegisterForm";
 
 const RegistrationPage: FC = () => {
   const location = useLocation();
@@ -47,8 +47,9 @@ const RegistrationPage: FC = () => {
         <div className={`auto-bg ${s.form_wrp}`}>
           <h2 className={"mb-4 text-center"}>{t("registerPage.register")}</h2>
 
+          {/*<RegistrationPageNextStep />*/}
           {isGoogleUserAndNotNumber && <RegistrationPageNextStep />}
-          {!isGoogleUserAndNotNumber && <SigInRegister pageType={"register"} />}
+          {!isGoogleUserAndNotNumber && <RegisterForm />}
         </div>
       </Container>
     </div>

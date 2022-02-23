@@ -10,6 +10,7 @@ import * as serviceWorker from "./serviceWorker";
 
 import "./locales/i18n";
 
+import "react-phone-number-input/style.css";
 import "./styles.scss";
 
 ReactDOM.render(

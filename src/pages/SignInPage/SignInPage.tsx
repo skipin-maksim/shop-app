@@ -8,7 +8,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Container } from "reactstrap";
-import SigInRegister from "../../components/_forms/SigInRegister/SigInRegister";
+import SigInForm from "../../components/_forms/SigInRegister/SigInForm";
 
 import s from "./signInPage.module.scss";
 
@@ -42,7 +42,7 @@ const SignInPage: FC = () => {
         <div className={`auto-bg ${s.form_wrp}`}>
           <h2 className={"mb-4 text-center"}>{t("signInPage.sigIn")}</h2>
 
-          <SigInRegister pageType={"sign-in"} />
+          <SigInForm />
         </div>
       </Container>
     </div>

@@ -2,11 +2,14 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { ReactComponent as GLogo } from "../../../assets/images/svg/google-logo.svg";
 import { Button } from "reactstrap";
 import { useTranslation } from "react-i18next";
-import { TProps } from "../../_forms/SigInRegister/SigInRegister";
 import { useAppDispatch } from "../../../redux/hooks";
 import { signInWithGoogle } from "../../../redux/auth/authOperations";
 
-const GoogleSignInBtn: FC<TProps> = ({ pageType }) => {
+interface IProps {
+  pageType: "sign-in" | "register";
+}
+
+const GoogleSignInBtn: FC<IProps> = ({ pageType }) => {
   const dispatch = useAppDispatch();
   const [text, setText] = useState("");
   const { t } = useTranslation();

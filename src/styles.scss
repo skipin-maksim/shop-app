@@ -57,7 +57,9 @@ body {
       color: $white;
       background: transparent;
     }
-    .main-input {
+
+    .main-input,
+    .PhoneInput .PhoneInputInput {
       padding: 8px;
       border: 1px solid $body-color;
       border-radius: 5px;
@@ -88,7 +90,8 @@ body {
       outline: none;
     }
 
-    .main-input {
+    .main-input,
+    .PhoneInput .PhoneInputInput {
       padding: 8px;
       border: 1px solid $body-color;
       border-radius: 5px;

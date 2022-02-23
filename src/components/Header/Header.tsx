@@ -35,7 +35,7 @@ const Header: FC = () => {
             </h1>
           </Link>
 
-          <LogoutBtn />
+          {isAuthenticated && <LogoutBtn />}
 
           <LanguageDropdown />
         </div>

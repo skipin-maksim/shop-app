@@ -55,10 +55,3 @@ export interface IReturnedUser {
 
 export type TCreateDataOfUserInfo = (user: User, role: TRole) => IReturnedUser;
 //====================================================================================
-
-export type TExistingUserUpdateInFirebase = (
-  user: User,
-  existingUser: IReturnedUser,
-  role: TRole
-) => Promise<IReturnedUser>;
-//====================================================================================
