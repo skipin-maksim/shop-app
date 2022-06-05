@@ -1,0 +1,33 @@
+{
+  "common": {
+    "logout": "Выйти",
+    "formMessages": {
+      "requiredField": "Обязательное поле",
+      "minLengthPassword": "Пароль должен быть длиннее 6 латинских символов или чисел",
+      "matches": "Поле имеет недопустимые символы"
+    }
+  },
+  "form": {
+    "enterName": "Введите имя",
+    "email": "Email",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "password": "Пароль",
+    "repeatPassword": "Повторить пароль"
+  },
+
+  "signInPage": {
+    "sigIn": "Вход",
+    "sigInBtn": "Войти",
+    "orRegistration": "Или зарегистрируйтесь",
+    "signInWithGoogle": "Войти с помощью Google"
+  },
+
+  "registerPage": {
+    "register": "Регистрация",
+    "registerBtn": "Зарегистрироваться",
+    "orSignIn": "Или войдите",
+    "registerWithGoogle": "Регистрация с помощью Google",
+    "add": "Добавить"
+  }
+}

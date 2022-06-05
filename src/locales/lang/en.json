@@ -1,0 +1,32 @@
+{
+  "common": {
+    "logout": "Logout",
+    "formMessages": {
+      "requiredField": "Required field",
+      "minLengthPassword": "Password must be longer than 6 latin characters or numbers",
+      "matches": "Field has invalid characters"
+    }
+  },
+  "form": {
+    "enterName": "Enter name",
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "repeatPassword": "Repeat password"
+  },
+
+  "signInPage": {
+    "sigIn": "Sign In",
+    "sigInBtn": "Sign In",
+    "orRegistration": "Or register",
+    "signInWithGoogle": "Sign in with Google"
+  },
+  "registerPage": {
+    "register": "Registration",
+    "registerBtn": "Register",
+    "orSignIn": "Or sign in",
+    "registerWithGoogle": "Register with Google",
+    "add": "Add"
+  }
+}

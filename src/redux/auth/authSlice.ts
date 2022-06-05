@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signInWithGoogle } from "./authOperations";
-import { onPending, onRejected, onSignInFulfilled } from "./authSliceFunctions";
+import { onPending, onRejected, onSignInFulfilled } from "./authFunctions";
 import { IAuthStore } from "../types/authTypes";
 
 const initialState: IAuthStore = {
@@ -33,19 +32,23 @@ const { reducer, actions } = createSlice({
     logoutError: (state, { payload }) => {
       onRejected(state, payload);
     },
+
+    setUpdatedUser: (state, { payload }) => {
+      state.user = payload;
+    },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(signInWithGoogle.pending, (state) => {
-        onPending(state);
-      })
-      .addCase(signInWithGoogle.fulfilled, (state, { payload }) => {
-        onSignInFulfilled(state, payload);
-      })
-      .addCase(signInWithGoogle.rejected, (state, { payload }) => {
-        onRejected(state, payload);
-      });
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(signInWithGoogle.pending, (state) => {
+  //       onPending(state);
+  //     })
+  //     .addCase(signInWithGoogle.fulfilled, (state, { payload }) => {
+  //       onSignInFulfilled(state, payload);
+  //     })
+  //     .addCase(signInWithGoogle.rejected, (state, { payload }) => {
+  //       onRejected(state, payload);
+  //     });
+  // },
 });
 
 export const {
@@ -56,6 +59,8 @@ export const {
   logoutRequest,
   logoutSuccess,
   logoutError,
+
+  setUpdatedUser,
 } = actions;
 
 export default reducer;

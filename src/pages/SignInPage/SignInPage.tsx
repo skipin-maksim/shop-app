@@ -1,47 +1,49 @@
 import MetaTags from "react-meta-tags";
-import React, { FC, useCallback, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import React, { FC, useEffect } from "react";
+import { useAppSelector } from "../../redux/hooks";
 import {
   getStoreUser,
   getStoreUserAuthenticated,
 } from "../../redux/auth/authSelectors";
-import { signInWithGoogle } from "../../redux/auth/authOperations";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Container } from "reactstrap";
-import { ReactComponent as GLogo } from "../../assets/images/svg/google-logo.svg";
+import { useTranslation } from "react-i18next";
+import { Container } from "reactstrap";
+import SigInForm from "../../components/_forms/SigInRegister/SigInForm";
+
+import s from "./signInPage.module.scss";
 
 const SignInPage: FC = () => {
-  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const isAuthenticated = useAppSelector(getStoreUserAuthenticated);
   const storeUser = useAppSelector(getStoreUser);
-  console.log(storeUser);
-
-  const onGoogleSignIn = useCallback(() => {
-    dispatch(signInWithGoogle());
-  }, [dispatch]);
-
-  // @ts-ignore
-  const fromPage = location.state ? location.state?.from?.pathname : "/";
 
   useEffect(() => {
-    isAuthenticated && navigate(fromPage, { replace: true });
-  }, [fromPage, isAuthenticated, navigate]);
+    // @ts-ignore
+    const fromPage = location.state ? location.state?.from?.pathname : "/";
 
+    isAuthenticated && navigate(fromPage, { replace: true });
+  }, [isAuthenticated, location.state, navigate]);
+
+  // TODO Если user регистрируется через мыло и пароль, сделать окно ввода имени тд
   return (
     <div>
       <MetaTags>
-        <title>{`Shop App | Sign In`}</title>
+        <title>{`Shop App | ${t("signInPage.sigIn")}`}</title>
       </MetaTags>
 
       <Container>
-        <h1>SignInPage</h1>
+        {storeUser && storeUser.providerId === "password" && (
+          <div>{t("form.enterName")}</div>
+        )}
 
-        <Button onClick={onGoogleSignIn} color={"light"} className="border">
-          <GLogo /> Войти с помощью Google
-        </Button>
+        <div className={`auto-bg ${s.form_wrp}`}>
+          <h2 className={"mb-4 text-center "}>{t("signInPage.sigIn")}</h2>
+
+          <SigInForm />
+        </div>
       </Container>
     </div>
   );
