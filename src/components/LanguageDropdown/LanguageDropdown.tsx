@@ -36,7 +36,7 @@ const LanguageDropdown = () => {
   }, []);
 
   const changeLanguage = (data: ISelectedLang) => {
-    i18n.changeLanguage(data.shortName).then((r) => setSelectedLang(data));
+    i18n.changeLanguage(data.shortName).then(() => setSelectedLang(data));
   };
 
   return (
@@ -51,7 +51,7 @@ const LanguageDropdown = () => {
           <img src={selectedLang?.data?.flag} alt="language" height="24" />
         </DropdownToggle>
 
-        <DropdownMenu className="language-switch dropdown-menu-end">
+        <DropdownMenu className="language-switch dropdown-menu-end drop_menu">
           {Object.entries(languages).map((langItem) => {
             const [shortName, data] = langItem;
 

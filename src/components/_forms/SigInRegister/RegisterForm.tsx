@@ -22,7 +22,12 @@ const schema = yup
     email: yup.string().email().required(),
     password: yup
       .string()
+      .min(6)
       // .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}/)
+      .required(),
+    repeatPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null])
       .required(),
     firstName: yup.string().required(),
     lastName: yup.string().required(),
@@ -38,6 +43,7 @@ export type TCurrentData = {
 export type TSigInRegister = {
   email: string;
   password: string;
+  repeatPassword: string;
   firstName?: string;
   lastName?: string;
   phoneNumber?: string;
@@ -66,28 +72,35 @@ const RegisterForm: FC = () => {
         errorType={errors.email}
         register={{ ...register("email") }}
         type={"email"}
-        placeholder={"Email"}
+        placeholder={t("form.email")}
       />
 
       <MainInput
         errorType={errors.password}
         register={{ ...register("password") }}
         type={"password"}
-        placeholder={"Password"}
+        placeholder={t("form.password")}
+      />
+
+      <MainInput
+        errorType={errors.repeatPassword}
+        register={{ ...register("repeatPassword") }}
+        type={"password"}
+        placeholder={t("form.repeatPassword")}
       />
 
       <MainInput
         errorType={errors.firstName}
         register={{ ...register("firstName") }}
         type={"text"}
-        placeholder={"First name"}
+        placeholder={t("form.firstName")}
       />
 
       <MainInput
         errorType={errors.lastName}
         register={{ ...register("lastName") }}
         type={"text"}
-        placeholder={"Last name"}
+        placeholder={t("form.lastName")}
       />
 
       {/*// @ts-ignore*/}

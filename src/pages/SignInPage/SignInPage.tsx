@@ -36,11 +36,11 @@ const SignInPage: FC = () => {
 
       <Container>
         {storeUser && storeUser.providerId === "password" && (
-          <div>Введите имя</div>
+          <div>{t("form.enterName")}</div>
         )}
 
         <div className={`auto-bg ${s.form_wrp}`}>
-          <h2 className={"mb-4 text-center"}>{t("signInPage.sigIn")}</h2>
+          <h2 className={"mb-4 text-center "}>{t("signInPage.sigIn")}</h2>
 
           <SigInForm />
         </div>

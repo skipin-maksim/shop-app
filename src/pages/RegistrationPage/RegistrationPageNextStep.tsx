@@ -13,6 +13,7 @@ import * as yup from "yup";
 import PhoneNumber from "../../components/_forms/_fields/PhoneNumber";
 
 import s from "../SignInPage/signInPage.module.scss";
+import { useTranslation } from "react-i18next";
 
 export type TRegister = {
   phoneNumber?: string;
@@ -28,6 +29,7 @@ const schema = yup
   .required();
 
 const RegistrationPageNextStep: FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -64,7 +66,7 @@ const RegistrationPageNextStep: FC = () => {
         color={"primary"}
         className={"mb-4 border-primary text"}
       >
-        Добавить
+        {t("registerPage.add")}
       </Button>
     </form>
   );

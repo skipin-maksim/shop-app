@@ -40,7 +40,7 @@ const RegistrationPage: FC = () => {
   return (
     <div>
       <MetaTags>
-        <title>{`Shop App | Registration`}</title>
+        <title>{`Shop App | ${t("registerPage.register")}`}</title>
       </MetaTags>
 
       <Container>

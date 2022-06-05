@@ -29,6 +29,8 @@ const MainInput: FC<IProps> = ({ register, errorType, type, placeholder }) => {
           t("common.formMessages.minLengthPassword")}
 
         {errorType?.type === "matches" && t("common.formMessages.matches")}
+        {errorType?.type === "min" && "min 6"}
+        {errorType?.type === "oneOf" && "Passwords must match"}
       </p>
     </div>
   );

@@ -24,6 +24,8 @@ const Header: FC = () => {
     [storeUser]
   );
 
+  const useRole = storeUser?.role;
+
   return (
     <header id={"header"} className={`auto-bg py-2 ${s.header}`}>
       <Container>
@@ -46,10 +48,20 @@ const Header: FC = () => {
               <img src={storeUser.photoURL} alt="avatar" />
             )}
 
-            <Link to={"/owner/dashboard"}>To /OWNER dashboard</Link>
-            <br />
-            <Link to={"/client/dashboard"}>To /CLIENT dashboard</Link>
-            <br />
+            {useRole === "owner" && (
+              <>
+                <Link to={"/owner/dashboard"}>To /OWNER dashboard</Link>
+                <br />
+              </>
+            )}
+
+            {useRole === "client" && (
+              <>
+                <Link to={"/client/dashboard"}>To /CLIENT dashboard</Link>
+                <br />
+              </>
+            )}
+
             <Link to={"/"}>To /</Link>
             <br />
           </>

@@ -4,11 +4,13 @@
 @import "./assets/scss/variables";
 @import "./assets/scss/mixins";
 
-$bg-first-light: #ffffff;
+$bg-first-light: #fff;
 $bg-second-light: #fafafa;
 $bg-first-dark: #08192c;
 $bg-second-dark: #0c2540;
 $color-black: #1e1e1e;
+$color-white: #fff;
+$color-text-dark: #fff;
 
 *,
 *:after,
@@ -45,12 +47,30 @@ body {
     --#{$variable-prefix}body-color: #{$body-color};
     background: url("./assets/images/png/pattern-dark.png");
 
+    h1,
+    h2,
+    h3,
+    p,
+    span,
+    a {
+      color: $color-text-dark;
+    }
+
     .auto-bg {
       background: $bg-first-dark;
       color: $body-color;
     }
     .auto-color {
       color: $body-color;
+    }
+    .drop_menu {
+      background: $bg-second-dark;
+
+      .notify-item {
+        &:hover {
+          background: $bg-first-dark;
+        }
+      }
     }
 
     input {

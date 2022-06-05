@@ -16,7 +16,7 @@ const schema = yup
     email: yup.string().email().required(),
     password: yup
       .string()
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s])/)
+      // .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s])/)
       .required(),
   })
   .required();
@@ -47,14 +47,14 @@ const SigInForm: FC = () => {
         errorType={errors.email}
         register={{ ...register("email") }}
         type={"email"}
-        placeholder={"Email"}
+        placeholder={t("form.email")}
       />
 
       <MainInput
         errorType={errors.password}
         register={{ ...register("password") }}
         type={"password"}
-        placeholder={"Password"}
+        placeholder={t("form.password")}
       />
 
       <Button

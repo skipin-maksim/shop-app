@@ -70,6 +70,8 @@ export const registrationWithEmailPass =
         data.password
       );
 
+      console.log(user);
+
       const createdUser = await createUserInFirebase(user, defaultRole, data);
 
       dispatch(checkSignInSuccess(createdUser));

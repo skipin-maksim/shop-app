@@ -7,6 +7,14 @@
       "matches": "Поле имеет недопустимые символы"
     }
   },
+  "form": {
+    "enterName": "Введите имя",
+    "email": "Email",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "password": "Пароль",
+    "repeatPassword": "Повторить пароль"
+  },
 
   "signInPage": {
     "sigIn": "Вход",
@@ -19,6 +27,7 @@
     "register": "Регистрация",
     "registerBtn": "Зарегистрироваться",
     "orSignIn": "Или войдите",
-    "registerWithGoogle": "Регистрация с помощью Google"
+    "registerWithGoogle": "Регистрация с помощью Google",
+    "add": "Добавить"
   }
 }
